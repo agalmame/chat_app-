@@ -3,7 +3,9 @@ const { VueLoaderPlugin } = require('vue-loader')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const { HotModuleReplacementPlugin } = require('webpack')
 require('babel-polyfill')
+
 module.exports = {
+	mode: "development",
 	entry: ["babel-polyfill","./src/main.js"],
 	output: {
      		path: path.resolve(__dirname, "dist"), //Output Directory
@@ -29,6 +31,7 @@ module.exports = {
 			{
 				test: /\.s[ac]ss$/,
 				use: [
+					'vue-style-loader',
 					'style-loader',
 					'css-loader',
 					'sass-loader'
@@ -49,9 +52,10 @@ module.exports = {
 	plugins: [
 		new HotModuleReplacementPlugin(),
         	new VueLoaderPlugin(),
-//        	new HTMLWebpackPlugin({
-//            		template: path.join(__dirname, 'index.html')
-//        })
+	      	new HTMLWebpackPlugin({
+	      		template: path.join(__dirname, 'index.html'),
+			minify: false,
+	  })
 
 	]
 }
